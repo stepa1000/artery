@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 
+dist-newstyle
 *.pydevproject
 .project
 .metadata

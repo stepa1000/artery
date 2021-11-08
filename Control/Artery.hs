@@ -74,7 +74,7 @@ instance Strong (Artery m) where
 instance Choice (Artery m) where
     left' = left
     {-# INLINE left' #-}
-    right' = right 
+    right' = right
     {-# INLINE right' #-}
 
 instance Num o => Num (Artery m i o) where
@@ -97,9 +97,12 @@ instance Fractional o => Fractional (Artery m i o) where
     recip = fmap recip
     fromRational = pure . fromRational
 
+instance Semigroup o => Semigroup (Artery m i o) where
+  (<>) = liftA2 (<>)
+
 instance Monoid o => Monoid (Artery m i o) where
     mempty = pure mempty
-    {-# INLINE mempty #-}
+    {-# INLINE mempty #-} 
     mappend = liftA2 mappend
     {-# INLINE mappend #-}
 
@@ -141,7 +144,7 @@ delay1 :: a -> Artery m a a
 delay1 = scan const
 {-# INLINE delay1 #-}
 
--- | 'delay n' propagates a signal n beat behind. 
+-- | 'delay n' propagates a signal n beat behind.
 delay :: Int -> a -> Artery m a a
 delay n d = go (Seq.replicate n d) where
     go buf = Artery $ \i cont -> case Seq.viewl buf of
