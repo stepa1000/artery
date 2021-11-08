@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 
+.stack-work
 dist-newstyle
 *.pydevproject
 .project
